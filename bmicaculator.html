@@ -42,6 +42,7 @@
         transition: background-color 0.3s ease;
         font-weight: bold;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        margin: 0% 30%;
       }
       button:hover {
         background-color: #0056b3;
@@ -57,7 +58,23 @@
         background-color: #f7f7f7;
         border: 1px solid #ddd;
       }
+
       input[type="number"]:focus {
+        outline: none;
+        border-color: #007bff;
+      }
+
+      select {
+        background-color: #f7f7f7;
+        border: 1px solid #ddd;
+        color: #0358ea;
+        /* width: 80%; */
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      select:focus {
         outline: none;
         border-color: #007bff;
       }
@@ -76,15 +93,76 @@
     <div class="container">
       <h1>BMI Calculator</h1>
       <input type="number" id="weight" placeholder="Enter your weight (kg)" />
+      <select name="weight" id="weight_unit" onchange="selectweight()">
+        <option value="Kg">Kg</option>
+        <option value="Pound">lb</option>
+      </select>
       <input type="number" id="height" placeholder="Enter your height (m)" />
+      <select name="height" id="height_unit" onchange="selectheight()">
+        <option value="meter">M</option>
+        <option value="Centimeter">Cm</option>
+        <option value="foot">Ft</option>
+      </select>
       <button onclick="calculateBMI()">Calculate BMI</button>
       <div id="result"></div>
     </div>
 
     <script>
+      let height_unit = document.querySelector("#height_unit");
+      let weight_unit = document.querySelector("#weight_unit");
+
+      function selectheight() {
+        let height_option = document.querySelector("#height");
+        let choosed_option = document.querySelector("#height_unit").value;
+        height_option.setAttribute(
+          "placeholder",
+          `Enter your height (${choosed_option})`
+        );
+      }
+
+      function selectweight() {
+        let weight_option = document.querySelector("#weight");
+        let choosed_option = document.querySelector("#weight_unit").value;
+        weight_option.setAttribute(
+          "placeholder",
+          `Enter your weight (${choosed_option})`
+        );
+      }
+
+      function Convert_weight_to_kg(weight, weight_unit) {
+        if (weight_unit == "Kg") {
+          // console.log("your WEIGHT in KG is : " + weight);
+          return weight;
+        }
+        if (weight_unit == "Pound") {
+          // console.log("youR WIEGHT IN POUND IS : " + 0.454 * weight);
+          return 0.454 * weight;
+        }
+      }
+
+      function Convert_height_to_meter(height, height_unit) {
+        if (height_unit == "meter") {
+          // console.log("your height in meter is : " + height);
+          return height;
+        }
+        if (height_unit == "Centimeter") {
+          // console.log("your height in meter is : " + height / 100);
+          return height / 100;
+        }
+        if (height_unit == "foot") {
+          // console.log("your height in meter is : " + 0.305 * height);
+          return 0.305 * height;
+        }
+      }
+
       function calculateBMI() {
-        const weight = parseFloat(document.getElementById("weight").value);
-        const height = parseFloat(document.getElementById("height").value);
+        let weight = parseFloat(document.getElementById("weight").value);
+        let height = parseFloat(document.getElementById("height").value);
+        let height_unit = document.querySelector("#height_unit").value;
+        let weight_unit = document.querySelector("#weight_unit").value;
+
+        weight = Convert_weight_to_kg(weight, weight_unit);
+        height = Convert_height_to_meter(height, height_unit);
 
         if (isNaN(weight) || isNaN(height) || height <= 0) {
           document.getElementById("result").innerText =
