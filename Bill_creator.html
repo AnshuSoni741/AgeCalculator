@@ -4,9 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bill Generator</title>
+    <style>
+        .container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
+        <h1>Bill Generator</h1>
         <table border="black">
                 <form action="">
                     <tr>
@@ -14,31 +23,38 @@
                         <td>PRODUCT QUANTITY TYPE</td>
                         <td>PRODUCT QUANTITY</td>
                         <td>PRODUCT PRICE</td>
-                        <td>SGST ON PRODUCT</td>
-                        <td>CGST ON PRODUCT</td>
-                        <td>DISCOUNT ON PRODUCT</td>
+                        <td>SGST % ON PRODUCT</td>
+                        <td>CGST % ON PRODUCT</td>
+                        <td>DISCOUNT % ON PRODUCT</td>
                     </tr>
                     <tr>
                         <td>
-                            <input type="text" id="pr_name_lable">
+                            <input type="text" id="pr_name" placeholder="Product name">
                         </td>
                         <td>
-                            <input type="text" id="pr_name_lable">
+                            <select id="pr_quantity_type">
+                                <option value="">Select quantity type</option>
+                                <option value="nos">Nos.</option>
+                                <option value="kg">KG</option>
+                                <option value="gm">Grams</option>
+                                <option value="lt">Litter</option>
+                                <option value="bar">Bar</option>
+                            </select>
                         </td>
                         <td>
-                            <input type="text" id="pr_name_lable">
+                            <input type="text" id="pr_quantity" placeholder="Quantity">
                         </td>
                         <td>
-                            <input type="text" id="pr_name_lable">
+                            <input type="text" id="pr_price" placeholder="Product Price">
+                        </td>
+                        <td >
+                            <input type="text" id="sgst" placeholder="SGST %">
                         </td>
                         <td>
-                            <input type="text" id="pr_name_lable">
+                            <input type="text" id="cgst" placeholder="CGST %">
                         </td>
                         <td>
-                            <input type="text" id="pr_name_lable">
-                        </td>
-                        <td>
-                            <input type="text" id="pr_name_lable">
+                            <input type="text" id="pr_discount" placeholder="Discount %">
                         </td>
                     </tr>
             </form>
