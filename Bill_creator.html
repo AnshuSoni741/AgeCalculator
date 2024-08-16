@@ -29,10 +29,10 @@
                     </tr>
                     <tr>
                         <td>
-                            <input type="text" id="pr_name" placeholder="Product name">
+                            <input type="text" id="pr_name1" placeholder="Product name">
                         </td>
                         <td>
-                            <select id = "pr_quantity_type">
+                            <select id = "pr_quantity_type1">
                                 <option value = "">Select quantity type</option>
                                 <option value = "nos">Nos.</option>
                                 <option value = "kg">KG</option>
@@ -42,34 +42,39 @@
                             </select>
                         </td>
                         <td>
-                            <input type="text" id="pr_quantity" placeholder="Quantity">
+                            <input type="text" id="pr_quantity1" placeholder="Quantity">
                         </td>
                         <td>
-                            <input type="text" id="pr_price" placeholder="Product Price">
+                            <input type="text" id="pr_price1" placeholder="Product Price">
                         </td>
                         <td >
-                            <input type="text" id="sgst" placeholder="SGST %">
+                            <input type="text" id="sgst1" placeholder="SGST %">
                         </td>
                         <td>
-                            <input type="text" id="cgst" placeholder="CGST %">
+                            <input type="text" id="cgst1" placeholder="CGST %">
                         </td>
                         <td>
-                            <input type="text" id="pr_discount" placeholder="Discount %">
+                            <input type="text" id="pr_discount1" placeholder="Discount %">
                         </td>
                     </tr>
                 </table>
-                <button id="add_product_btn">Add product</button>
+                <button type="button" id="add_product_btn">Add product</button>
+                <button type="button" id="print_product_btn">print data</button>
             </form>
             
     </div>
 
     <script>
-        let new_product = `<tr>
-                        <td>
-                            <input type="text" id="pr_name" placeholder="Product name">
+                 let pro_count = 2;
+                let product_table = document.querySelector("#product_table");
+                let add_product_btn = document.querySelector("#add_product_btn");
+                let print_product_btn = document.querySelector("#print_product_btn");
+                add_product_btn.addEventListener("click",()=>{
+                    let new_product = `<td>
+                            <input type="text" id="pr_name${pro_count}" placeholder="Product name">
                         </td>
                         <td>
-                            <select id = "pr_quantity_type">
+                            <select id = "pr_quantity_type${pro_count}">
                                 <option value = "">Select quantity type</option>
                                 <option value = "nos">Nos.</option>
                                 <option value = "kg">KG</option>
@@ -79,27 +84,47 @@
                             </select>
                         </td>
                         <td>
-                            <input type="text" id="pr_quantity" placeholder="Quantity">
+                            <input type="text" id="pr_quantity${pro_count}" placeholder="Quantity">
                         </td>
                         <td>
-                            <input type="text" id="pr_price" placeholder="Product Price">
+                            <input type="text" id="pr_price${pro_count}" placeholder="Product Price">
                         </td>
                         <td >
-                            <input type="text" id="sgst" placeholder="SGST %">
+                            <input type="text" id="sgst${pro_count}" placeholder="SGST %">
                         </td>
                         <td>
-                            <input type="text" id="cgst" placeholder="CGST %">
+                            <input type="text" id="cgst${pro_count}" placeholder="CGST %">
                         </td>
                         <td>
-                            <input type="text" id="pr_discount" placeholder="Discount %">
-                        </td>
-                    </tr>`;
-                let product_table = document.querySelector("#product_table");
-                let add_product_btn = document.querySelector("#add_product_btn");
-                add_product_btn.addEventListener("click",()=>{
-                    console.log("product added");
-                    // product_table.append(new_product);
+                            <input type="text" id="pr_discount${pro_count}" placeholder="Discount %">
+                        </td>`;
+                    // console.log("product added");
+                    let new_row = document.createElement("tr");
+                    new_row.innerHTML = new_product;
+                    product_table.append(new_row);
+                    pro_count++;
                 });
+
+
+                function printdata(){
+                    for(let i=1;i<pro_count;i++){
+                    let proname = document.querySelector(`#pr_name${i}`).value;
+                    let pr_quanitity_type = document.querySelector(`#pr_quantity_type${i}`).value;
+                    let pr_quantity = document.querySelector(`#pr_quantity${i}`).value;
+                    let pr_price = document.querySelector(`#pr_price${i}`).value;
+                    let sgst = document.querySelector(`#sgst${i}`).value;
+                    let cgst = document.querySelector(`#cgst${i}`).value;
+                    let pr_discount = document.querySelector(`#pr_discount${i}`).value;
+                    console.log(`product ${i} name : ${proname}`);
+                    }
+                }
+
+                print_product_btn.addEventListener("click",()=>{
+                    printdata();
+                });
+
+            
+
     </script>
 </body>
 </html>
