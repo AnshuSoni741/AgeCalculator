@@ -16,8 +16,8 @@
 <body>
     <div class="container">
         <h1>Bill Generator</h1>
-        <table border="black">
-                <form action="">
+        <form action="">
+        <table border="black" id="product_table">
                     <tr>
                         <td>PRODUCT NAME</td>
                         <td>PRODUCT QUANTITY TYPE</td>
@@ -32,13 +32,13 @@
                             <input type="text" id="pr_name" placeholder="Product name">
                         </td>
                         <td>
-                            <select id="pr_quantity_type">
-                                <option value="">Select quantity type</option>
-                                <option value="nos">Nos.</option>
-                                <option value="kg">KG</option>
-                                <option value="gm">Grams</option>
-                                <option value="lt">Litter</option>
-                                <option value="bar">Bar</option>
+                            <select id = "pr_quantity_type">
+                                <option value = "">Select quantity type</option>
+                                <option value = "nos">Nos.</option>
+                                <option value = "kg">KG</option>
+                                <option value = "gm">Grams</option>
+                                <option value = "lt">Litter</option>
+                                <option value = "bar">Bar</option>
                             </select>
                         </td>
                         <td>
@@ -57,9 +57,49 @@
                             <input type="text" id="pr_discount" placeholder="Discount %">
                         </td>
                     </tr>
+                </table>
+                <button id="add_product_btn">Add product</button>
             </form>
-            </table>
             
     </div>
+
+    <script>
+        let new_product = `<tr>
+                        <td>
+                            <input type="text" id="pr_name" placeholder="Product name">
+                        </td>
+                        <td>
+                            <select id = "pr_quantity_type">
+                                <option value = "">Select quantity type</option>
+                                <option value = "nos">Nos.</option>
+                                <option value = "kg">KG</option>
+                                <option value = "gm">Grams</option>
+                                <option value = "lt">Litter</option>
+                                <option value = "bar">Bar</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="text" id="pr_quantity" placeholder="Quantity">
+                        </td>
+                        <td>
+                            <input type="text" id="pr_price" placeholder="Product Price">
+                        </td>
+                        <td >
+                            <input type="text" id="sgst" placeholder="SGST %">
+                        </td>
+                        <td>
+                            <input type="text" id="cgst" placeholder="CGST %">
+                        </td>
+                        <td>
+                            <input type="text" id="pr_discount" placeholder="Discount %">
+                        </td>
+                    </tr>`;
+                let product_table = document.querySelector("#product_table");
+                let add_product_btn = document.querySelector("#add_product_btn");
+                add_product_btn.addEventListener("click",()=>{
+                    console.log("product added");
+                    product_table.append(new_product);
+                });
+    </script>
 </body>
 </html>
