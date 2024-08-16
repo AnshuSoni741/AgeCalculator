@@ -115,7 +115,17 @@
                     let sgst = document.querySelector(`#sgst${i}`).value;
                     let cgst = document.querySelector(`#cgst${i}`).value;
                     let pr_discount = document.querySelector(`#pr_discount${i}`).value;
-                    console.log(`product ${i} name : ${proname}`);
+                    console.log(`
+----------------------------------
+product ${i} name : ${proname}
+product ${i} quantity type : ${pr_quanitity_type}
+product ${i} quantity : ${pr_quantity}
+product ${i} price : ${pr_price}
+product ${i} sgst : ${sgst}
+product ${i} cgst : ${cgst}
+product ${i} discount : ${pr_discount}
+-----------------------------------------
+                    `);
                     }
                 }
 
