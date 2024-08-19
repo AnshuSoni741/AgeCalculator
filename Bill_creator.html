@@ -13,12 +13,15 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>Bill Generator</h1>
         <form action="">
         <table border="black" id="product_table">
-                    <tr>
+            <tbody>
+                    <tr id="r1">
+                        <td>Sr.No.</td>
                         <td>PRODUCT NAME</td>
                         <td>PRODUCT QUANTITY TYPE</td>
                         <td>PRODUCT QUANTITY</td>
@@ -27,7 +30,8 @@
                         <td>CGST % ON PRODUCT</td>
                         <td>DISCOUNT % ON PRODUCT</td>
                     </tr>
-                    <tr>
+                    <tr id="r2">
+                        <td>1.</td>
                         <td>
                             <input type="text" id="pr_name1" placeholder="Product name">
                         </td>
@@ -57,20 +61,29 @@
                             <input type="text" id="pr_discount1" placeholder="Discount %">
                         </td>
                     </tr>
+                </tbody>
                 </table>
                 <button type="button" id="add_product_btn">Add product</button>
                 <button type="button" id="print_product_btn">print data</button>
+                <button type="button" id="calculate_btn">Calculate bill</button>
             </form>
-            
+
     </div>
 
     <script>
-                 let pro_count = 2;
-                let product_table = document.querySelector("#product_table");
+                let pro_count = 3;
+                let product_table1 = document.querySelector("#product_table");
+                let product_table = document.querySelector("tbody");
                 let add_product_btn = document.querySelector("#add_product_btn");
                 let print_product_btn = document.querySelector("#print_product_btn");
+                let calculate_btn = document.querySelector("#calculate_btn");
+
+
+                // add new product row
                 add_product_btn.addEventListener("click",()=>{
-                    let new_product = `<td>
+                    let new_product = `
+                    <td>${pro_count-1}</td>
+                    <td>
                             <input type="text" id="pr_name${pro_count}" placeholder="Product name">
                         </td>
                         <td>
@@ -100,6 +113,7 @@
                         </td>`;
                     // console.log("product added");
                     let new_row = document.createElement("tr");
+                    new_row.id = `r${pro_count}`;
                     new_row.innerHTML = new_product;
                     product_table.append(new_row);
                     pro_count++;
@@ -133,6 +147,55 @@ product ${i} discount : ${pr_discount}
                     printdata();
                 });
 
+                calculate_btn.addEventListener("click",()=>{
+                    // console.log("this is calculated.......");
+
+                    let F_row = document.querySelector(`#r1`);
+                    let fr_new_col = document.createElement("td");
+                        fr_new_col.innerHTML = "Final Product Price"
+                        F_row.append(fr_new_col);
+
+                    console.log(pro_count);
+                    for(let j=2;j<pro_count;j++){
+                        let row = document.querySelector(`#r${j}`);
+                        let new_col = document.createElement("td");
+                        new_col.innerHTML = " new col "
+                        row.append(new_col);
+                    }
+
+                    let total_row = `
+                        <td>-</td>
+                        <td>
+                            -
+                        </td>
+                        <td>
+                           -
+                        </td>
+                        <td>
+                            -
+                        </td>
+                        <td>
+                            Totale Price
+                        </td>
+                        <td >
+                            Total SGST
+                        </td>
+                        <td>
+                            Total CGST
+                        </td>
+                        <td>
+                            TOTAL DISCOUNT
+                        </td>
+                         <td>
+                            TOTAL PRICE
+                        </td>`;
+                    // console.log("product added");
+                    let new_row = document.createElement("tr");
+                    new_row.id = "total_row";
+                    new_row.innerHTML = total_row;
+                    product_table.append(new_row);
+                    // pro_count++;
+                });
             
 
     </script>
