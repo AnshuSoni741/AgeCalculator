@@ -47,13 +47,13 @@
                             </select>
                         </td>
                         <td>
-                            <input type="text" id="pr_quantity1" placeholder="Quantity">
+                            <input type="text" id="pr_quantity1" placeholder="Quantity" onkeyup=total_price_cal()>
                         </td>
                         <td>
-                            <input type="text" id="pr_rate1" placeholder="Product rate">
+                            <input type="text" id="pr_rate1" placeholder="Product rate" onkeyup=total_price_cal()>
                         </td>
                         <td>
-                            <input type="text" id="pr_price1" placeholder="Product Price">
+                            <input type="text" id="pr_price1" placeholder="Product Price" disabled>
                         </td>
                         <td >
                             <input type="text" id="sgst1" placeholder="SGST %">
@@ -102,15 +102,15 @@
                             </select>
                         </td>
                         <td>
-                            <input type="text" id="pr_quantity${pro_count+1}" placeholder="Quantity">
+                            <input type="text" id="pr_quantity${pro_count+1}" onkeyup=total_price_cal() placeholder="Quantity">
                         </td>
                         <td>
-                            <input type="text" id="pr_rate${pro_count+1}" placeholder="Product Rate">
+                            <input type="text" id="pr_rate${pro_count+1}" onkeyup=total_price_cal() placeholder="Product Rate">
                         </td>
                         <td>
-                            <input type="text" id="pr_price${pro_count+1}" placeholder="Product Price">
+                            <input type="text" id="pr_price${pro_count+1}" placeholder="Product Price" disabled>
                         </td>
-                        <td >
+                        <td>
                             <input type="text" id="sgst${pro_count+1}" placeholder="SGST %">
                         </td>
                         <td>
@@ -156,15 +156,32 @@ product ${i} discount : ${pr_discount}
                     printdata();
                 });
 
+                //eventlistner apply on each total price lable to caluculate totaly price with out gst/discount
+                function total_price_cal(e){
+
+                    // console.log("thiss is change in price of product");
+                        
+                    for(let d = 1;d<=pro_count;d++){
+                        let pr_price = document.querySelector(`#pr_price${d}`);
+                         let pr_quantity = document.querySelector(`#pr_quantity${d}`);
+                         let pr_rate = document.querySelector(`#pr_rate${d}`);
+                         pr_price.value = pr_rate.value * pr_quantity.value ;
+                    }
+                }
+
+
                 calculate_btn.addEventListener("click",()=>{
                     // console.log("this is calculated.......");
 
+
+                    //ADDING NEW COLUMN IN HEADING
                     let F_row = document.querySelector(`#r1`);
                     let fr_new_col = document.createElement("td");
                         fr_new_col.innerHTML = "Final Product Price"
                         F_row.append(fr_new_col);
 
-                    // console.log(pro_count);
+
+                    //    ADDING FINNALL PRICE OF EACH PRODUCT IN NEW COLOMN IN RESPECTIVE PRODUCT ROW
                     for(let j=1;j<=pro_count;j++){
                         // let proname = document.querySelector(`#pr_name${i}`).value;
                         let pr_quanitity_type = document.querySelector(`#pr_quantity_type${j}`).value;
@@ -177,19 +194,30 @@ product ${i} discount : ${pr_discount}
                         let final_pro_price = final_product_price_calculator(pr_quanitity_type,pr_quantity,pr_rate,sgst,cgst,pr_discount); 
                         let row = document.querySelector(`#r${j+1}`);
                         let new_col = document.createElement("td");
-                        new_col.id = ``
+                        new_col.id = `total_pro_price${j}`;
                         new_col.innerHTML = final_pro_price;
                         row.append(new_col);
                     }
 
 
+
+                    // CALCULATION OF TOTAL PRODUCT PRICE AFTER PUTTING GST AND DISCOUNT
+                    let total_pro_price = 0;
                     for(let k=1; k<=pro_count; k++){
-                        let row = document.querySelector(`#r${k+1}`);
-                        new_col.innerHTML = final_pro_price;
-                        row.append(new_col);
-
-
+                        let pro_price = document.querySelector(`#total_pro_price${k}`);
+                        total_pro_price = total_pro_price +  parseFloat(pro_price.innerHTML);
+                        console.log(pro_price.innerHTML);
                     }
+                    
+                    // CALCULATION OF TOTAL PRODUCT PRICE BEFORE GST AND DISCOUNT
+                    let total_pr_price = 0;
+                    for(let k=1; k<=pro_count; k++){
+                        let pr_price = document.querySelector(`#pr_price${k}`);
+                        console.log(pr_price.value);
+
+                        total_pr_price = total_pr_price +  parseInt(pr_price.value);
+                    }
+
 
 
                     let total_row = `
@@ -207,23 +235,23 @@ product ${i} discount : ${pr_discount}
                             -
                         </td>
                         <td>
-                            Totale Price
+                            ${total_pr_price}
                         </td>
                         <td >
-                            Total SGST
+                            -
                         </td>
                         <td>
-                            Total CGST
+                            -
                         </td>
                         <td>
-                            TOTAL DISCOUNT
+                            -
                         </td>
                          <td>
-                            TOTAL PRICE
+                            ${total_pro_price}
                         </td>`;
                     // console.log("product added");
                     let new_row = document.createElement("tr");
-                    new_row.id = "total_row";
+                    new_row.id = "total_row${}";
                     new_row.innerHTML = total_row;
                     product_table.append(new_row);
                     // pro_count++;
